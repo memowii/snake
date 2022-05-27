@@ -22,9 +22,22 @@ module View
     private
 
     def render_food(state)
+      @food.remove if @food
+      extend Ruby2D::DSL
+      food = state.food
+      @food = Square.new(
+        x: food.col * @pixel_size,
+        y: food.row * @pixel_size,
+        size: @pixel_size,
+        color: 'yellow'
+      )
+    end
+
+    def render_snake(state)
+      @snake_positions.each(&:remove) if @snake_positions
       extend Ruby2D::DSL
       snake = state.snake
-      snake.positions.each do |pos|
+      @snake_positions = snake.positions.map do |pos|
         Square.new(
           x: pos.col * @pixel_size,
           y: pos.row * @pixel_size,
@@ -32,17 +45,5 @@ module View
           color: 'green'
         )
       end
-    end
-
-    def render_snake(state)
-      extend Ruby2D::DSL
-      food = state.food
-      Square.new(
-        x: food.col * @pixel_size,
-        y: food.row * @pixel_size,
-        size: @pixel_size,
-        color: 'yellow'
-      )
-    end
-  end
+    end  end
 end
