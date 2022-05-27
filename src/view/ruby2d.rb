@@ -45,5 +45,6 @@ module View
           color: 'green'
         )
       end
-    end  end
+    end
+  end
 end
